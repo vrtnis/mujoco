@@ -30,7 +30,7 @@
 #include <utility>
 #include <vector>
 
-#include "lodepng.h"
+//#include "lodepng.h"
 #include <mujoco/mjmacro.h>
 #include <mujoco/mjmodel.h>
 #include <mujoco/mjplugin.h>
@@ -3081,19 +3081,7 @@ void mjCHField::LoadCustom(mjResource* resource) {
 
 // load elevation data from PNG format
 void mjCHField::LoadPNG(mjResource* resource) {
-  unsigned w, h;
-  std::vector<unsigned char> image = ::LoadPNG(this, resource, w, h, LCT_GREY);
-
-  ncol = w;
-  nrow = h;
-
-  // copy image data over with rows reversed
-  data.reserve(nrow * ncol);
-  for (int r = 0; r < nrow; r++) {
-    for (int c = 0; c < ncol; c++) {
-      data.push_back((float) image[c + (nrow - 1 - r)*ncol]);
-    }
-  }
+return;
 }
 
 
@@ -3498,8 +3486,8 @@ void mjCTexture::BuiltinCube(void) {
 void mjCTexture::LoadPNG(mjResource* resource,
                          std::vector<unsigned char>& image,
                          unsigned int& w, unsigned int& h) {
-  image = ::LoadPNG(this, resource, w, h, LCT_RGB);
-}
+ return;
+                         }
 
 
 
