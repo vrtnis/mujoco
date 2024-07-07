@@ -3070,7 +3070,7 @@ void mjXReader::Visual(XMLElement* section) {
 
 // asset section parser
 void mjXReader::Asset(XMLElement* section) {
-  int n;
+  
   string text, name, texname, content_type;
   XMLElement* elem;
 
@@ -3086,73 +3086,7 @@ void mjXReader::Asset(XMLElement* section) {
       def = mjs_getSpecDefault(model);
     }
 
-    // texture sub-element
-    if (name=="texture") {
-      // create texture
-      mjsTexture* ptex = mjs_addTexture(model);
-
-      // write error info
-      mjs_setString(ptex->info, ("line " + std::to_string(elem->GetLineNum())).c_str());
-
-      // read attributes
-      if (MapValue(elem, "type", &n, texture_map, texture_sz)) {
-        ptex->type = (mjtTexture)n;
-      }
-      if (ReadAttrTxt(elem, "name", texname)) {
-        mjs_setString(ptex->name, texname.c_str());
-      }
-      if (ReadAttrTxt(elem, "content_type", content_type)) {
-        mjs_setString(ptex->content_type, content_type.c_str());
-      }
-      auto file = ReadAttrFile(elem, "file", TextureDir());
-      if (file.has_value()) {
-        mjs_setString(ptex->file, file->c_str());
-      }
-      ReadAttrInt(elem, "width", &ptex->width);
-      ReadAttrInt(elem, "height", &ptex->height);
-      ReadAttr(elem, "rgb1", 3, ptex->rgb1, text);
-      ReadAttr(elem, "rgb2", 3, ptex->rgb2, text);
-      ReadAttr(elem, "markrgb", 3, ptex->markrgb, text);
-      ReadAttr(elem, "random", 1, &ptex->random, text);
-      if (MapValue(elem, "builtin", &n, builtin_map, builtin_sz)) {
-        ptex->builtin = (mjtBuiltin)n;
-      }
-      if (MapValue(elem, "mark", &n, mark_map, mark_sz)) {
-        ptex->mark = (mjtMark)n;
-      }
-      if (MapValue(elem, "hflip", &n, bool_map, 2)) {
-        ptex->hflip = (n!=0);
-      }
-      if (MapValue(elem, "vflip", &n, bool_map, 2)) {
-        ptex->vflip = (n!=0);
-      }
-
-      // grid
-      ReadAttr(elem, "gridsize", 2, ptex->gridsize, text);
-      if (ReadAttrTxt(elem, "gridlayout", text)) {
-        // check length
-        if (text.length()>12) {
-          throw mjXError(elem, "gridlayout length cannot exceed 12 characters");
-        }
-        if (text.length()!=ptex->gridsize[0]*ptex->gridsize[1]) {
-          throw mjXError(elem, "gridlayout length must match gridsize");
-        }
-
-        memcpy(ptex->gridlayout, text.data(), text.length());
-      }
-
-      // separate files
-      std::vector<string> cubefiles(6);
-      cubefiles[0] = ReadAttrFile(elem, "fileright", TextureDir()).value_or("");
-      cubefiles[1] = ReadAttrFile(elem, "fileleft", TextureDir()).value_or("");
-      cubefiles[2] = ReadAttrFile(elem, "fileup", TextureDir()).value_or("");
-      cubefiles[3] = ReadAttrFile(elem, "filedown", TextureDir()).value_or("");
-      cubefiles[4] = ReadAttrFile(elem, "filefront", TextureDir()).value_or("");
-      cubefiles[5] = ReadAttrFile(elem, "fileback", TextureDir()).value_or("");
-      for (int i = 0; i < cubefiles.size(); i++) {
-        mjs_setInStringVec(ptex->cubefiles, i, cubefiles[i].c_str());
-      }
-    }
+    
 
     // material sub-element
     else if (name=="material") {

@@ -44,7 +44,7 @@ class mjCHField;
 class mjCFlex;         // defined in user_mesh.h
 class mjCMesh;         // defined in user_mesh.h
 class mjCSkin;         // defined in user_mesh.h
-class mjCTexture;
+
 class mjCMaterial;
 class mjCPair;
 class mjCBodyPair;
@@ -994,66 +994,6 @@ class mjCHField : public mjCHField_, private mjsHField {
   void LoadPNG(mjResource* resource);     // load from PNG format
 };
 
-
-
-//------------------------- class mjCTexture -------------------------------------------------------
-// Describes a texture
-
-class mjCTexture_ : public mjCBase {
- protected:
-  std::vector<mjtByte> rgb;                   // rgb data
-
-  std::string file_;
-  std::string content_type_;
-  std::vector<std::string> cubefiles_;
-  std::string spec_file_;
-  std::string spec_content_type_;
-  std::vector<std::string> spec_cubefiles_;
-};
-
-class mjCTexture : public mjCTexture_, private mjsTexture {
-  friend class mjCModel;
-  friend class mjXReader;
-  friend class mjXWriter;
-
- public:
-  mjCTexture(mjCModel*);
-  mjCTexture(const mjCTexture& other);
-  mjCTexture& operator=(const mjCTexture& other);
-  ~mjCTexture();
-
-  mjsTexture spec;
-  using mjCBase::name;
-  using mjCBase::classname;
-  using mjCBase::info;
-
-  void CopyFromSpec(void);
-  void PointToLocal(void);
-
-  std::string get_file() const { return file_; }
-  std::string get_content_type() const { return content_type_; }
-  std::vector<std::string> get_cubefiles() const { return cubefiles_; }
-
- private:
-  void Compile(const mjVFS* vfs);         // compiler
-
-  void Builtin2D(void);                   // make builtin 2D
-  void BuiltinCube(void);                 // make builtin cube
-  void Load2D(std::string filename, const mjVFS* vfs);          // load 2D from file
-  void LoadCubeSingle(std::string filename, const mjVFS* vfs);  // load cube from single file
-  void LoadCubeSeparate(const mjVFS* vfs);                      // load cube from separate files
-
-  void LoadFlip(std::string filename, const mjVFS* vfs,         // load and flip
-                std::vector<unsigned char>& image,
-                unsigned int& w, unsigned int& h);
-
-  void LoadPNG(mjResource* resource,
-               std::vector<unsigned char>& image,
-               unsigned int& w, unsigned int& h);
-  void LoadCustom(mjResource* resource,
-                  std::vector<unsigned char>& image,
-                  unsigned int& w, unsigned int& h);
-};
 
 
 

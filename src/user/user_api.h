@@ -879,8 +879,6 @@ MJAPI mjsHField* mjs_addHField(mjSpec* s);
 // Add skin.
 MJAPI mjsSkin* mjs_addSkin(mjSpec* s);
 
-// Add texture.
-MJAPI mjsTexture* mjs_addTexture(mjSpec* s);
 
 // Add material.
 MJAPI mjsMaterial* mjs_addMaterial(mjSpec* s, mjsDefault* def);

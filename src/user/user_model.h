@@ -148,7 +148,7 @@ class mjCModel : public mjCModel_, private mjSpec {
   friend class mjCSkin;
   friend class mjCSite;
   friend class mjCTendon;
-  friend class mjCTexture;
+
   friend class mjCActuator;
   friend class mjCSensor;
   friend class mjCDef;
@@ -178,7 +178,7 @@ class mjCModel : public mjCModel_, private mjSpec {
   mjCMesh* AddMesh(mjCDef* def = nullptr);
   mjCSkin* AddSkin();
   mjCHField* AddHField();
-  mjCTexture* AddTexture();
+
   mjCMaterial* AddMaterial(mjCDef* def = nullptr);
   mjCPair* AddPair(mjCDef* def = nullptr);          // geom pair for inclusion
   mjCBodyPair* AddExclude();                        // body pair for exclusion
@@ -233,7 +233,7 @@ class mjCModel : public mjCModel_, private mjSpec {
   const std::vector<mjCMesh*>& Meshes() const {return meshes_; }
   const std::vector<mjCSkin*>& Skins() const { return skins_; }
   const std::vector<mjCHField*>& HFields() const { return hfields_; }
-  const std::vector<mjCTexture*>& Textures() const { return textures_; }
+
   const std::vector<mjCMaterial*>& Materials() const { return materials_; }
   const std::vector<mjCPair*>& Pairs() const { return pairs_; }
   const std::vector<mjCBodyPair*>& Excludes() const { return excludes_; }
@@ -292,7 +292,7 @@ class mjCModel : public mjCModel_, private mjSpec {
   std::vector<mjCMesh*>     meshes_;      // list of meshes
   std::vector<mjCSkin*>     skins_;       // list of skins
   std::vector<mjCHField*>   hfields_;     // list of height fields
-  std::vector<mjCTexture*>  textures_;    // list of textures
+
   std::vector<mjCMaterial*> materials_;   // list of materials
   std::vector<mjCPair*>     pairs_;       // list of geom pairs to include
   std::vector<mjCBodyPair*> excludes_;    // list of body pairs to exclude

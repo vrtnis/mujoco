@@ -1356,57 +1356,6 @@ void mjXWriter::Asset(XMLElement* root) {
   // create section
   XMLElement* section = InsertEnd(root, "asset");
 
-  // write textures
-  mjCTexture deftex(0);
-  for (int i=0; i<ntex; i++) {
-    // create element
-    mjCTexture* ptex = (mjCTexture*)model->GetObject(mjOBJ_TEXTURE, i);
-    elem = InsertEnd(section, "texture");
-
-    // write common attributes
-    WriteAttrKey(elem, "type", texture_map, texture_sz, ptex->type);
-    WriteAttrTxt(elem, "name", ptex->name);
-
-    // write builtin
-    if (ptex->builtin!=mjBUILTIN_NONE) {
-      WriteAttrKey(elem, "builtin", builtin_map, builtin_sz, ptex->builtin);
-      WriteAttrKey(elem, "mark", mark_map, mark_sz, ptex->mark, deftex.mark);
-      WriteAttr(elem, "rgb1", 3, ptex->rgb1, deftex.rgb1);
-      WriteAttr(elem, "rgb2", 3, ptex->rgb2, deftex.rgb2);
-      WriteAttr(elem, "markrgb", 3, ptex->markrgb, deftex.markrgb);
-      WriteAttr(elem, "random", 1, &ptex->random, &deftex.random);
-      WriteAttrInt(elem, "width", ptex->width);
-      WriteAttrInt(elem, "height", ptex->height);
-    }
-
-    // write textures loaded from files
-    else {
-      // write single file
-      WriteAttrTxt(elem, "content_type", ptex->get_content_type());
-      WriteAttrTxt(elem, "file", ptex->get_file());
-
-      // write separate files
-      WriteAttrTxt(elem, "fileright", ptex->get_cubefiles()[0]);
-      WriteAttrTxt(elem, "fileleft", ptex->get_cubefiles()[1]);
-      WriteAttrTxt(elem, "fileup", ptex->get_cubefiles()[2]);
-      WriteAttrTxt(elem, "filedown", ptex->get_cubefiles()[3]);
-      WriteAttrTxt(elem, "filefront", ptex->get_cubefiles()[4]);
-      WriteAttrTxt(elem, "fileback", ptex->get_cubefiles()[5]);
-      if (ptex->hflip) {
-        WriteAttrKey(elem, "hflip", bool_map, 2, 1);
-      }
-      if (ptex->vflip) {
-        WriteAttrKey(elem, "vflip", bool_map, 2, 1);
-      }
-
-      // write grid
-      if (ptex->gridsize[0] != 1 || ptex->gridsize[1] != 1) {
-        double gsize[2] = { (double)ptex->gridsize[0], (double)ptex->gridsize[1] };
-        WriteAttr(elem, "gridsize", 2, gsize);
-        WriteAttrTxt(elem, "gridlayout", ptex->gridlayout);
-      }
-    }
-  }
 
   // write materials
   for (int i=0; i<nmat; i++) {

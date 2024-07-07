@@ -1,17 +1,3 @@
-# Copyright 2021 DeepMind Technologies Limited
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     https://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 cmake_minimum_required(VERSION 3.16)
 
 # Make CMAKE_C_VISIBILITY_PRESET work properly.
@@ -115,7 +101,6 @@ target_link_options(
 target_link_libraries(
   mujoco
   PRIVATE ccd
-          
           qhullstatic_r
           tinyobjloader
           tinyxml2
@@ -234,3 +219,41 @@ if(NOT (APPLE AND MUJOCO_BUILD_MACOS_FRAMEWORKS))
     PATTERN "CMakeLists.txt" EXCLUDE
   )
 endif()
+
+# Setup for Emscripten
+if (CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
+  set(SIMULATE_RESOURCE_FILES "") # Ensure SIMULATE_RESOURCE_FILES is defined
+
+  # Define the source files required for the simulate target, excluding GLFW-specific files
+  set(SIMULATE_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/simulate/main.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/simulate/array_safety.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/simulate/simulate.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/simulate/platform_ui_adapter.cc # Ensure this does not depend on GLFW
+    ${SIMULATE_RESOURCE_FILES}
+  )
+
+  # Verify the source files exist
+  foreach(SOURCE ${SIMULATE_SOURCES})
+    if(NOT EXISTS "${SOURCE}")
+      message(FATAL_ERROR "File ${SOURCE} not found")
+    endif()
+  endforeach()
+
+  set_target_properties(mujoco PROPERTIES
+    OUTPUT_NAME "mujoco_wasm"
+    SUFFIX ".wasm"
+  )
+
+  set(CMAKE_EXECUTABLE_SUFFIX ".html")
+
+  target_link_options(mujoco PRIVATE
+    -s WASM=1
+    -s EXPORTED_FUNCTIONS='["_main", "_mj_step", "_mj_loadXML"]'
+    -s EXTRA_EXPORTED_RUNTIME_METHODS='["FS", "ccall", "cwrap"]'
+  )
+
+  add_executable(mujoco_wasm ${SIMULATE_SOURCES})
+  target_link_libraries(mujoco_wasm mujoco::mujoco)
+endif()
+

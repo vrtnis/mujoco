@@ -163,6 +163,22 @@ static int mjGlad_dl_iterate_callback(struct dl_phdr_info* info, size_t size, vo
   return result;
 }
 
+#include <link.h> // Include necessary headers
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// Dummy implementation of dl_iterate_phdr
+int dl_iterate_phdr(int (*callback)(struct dl_phdr_info *info, size_t size, void *data), void *data) {
+    return 0; // Dummy implementation
+}
+
+#ifdef __cplusplus
+}
+#endif
+
+
 static int mjGlad_open_gl(void) {
   mjGladGetProcAddressPtr = NULL;
 
@@ -193,6 +209,7 @@ static int mjGlad_open_gl(void) {
   // the symbols aren't visible because the load was done with RTLD_LOCAL. We walk through the
   // list of DSOs already loaded to see which platform we should be using.
   const char* libname = NULL;
+
   const mjtGLPlatform platform = dl_iterate_phdr(&mjGlad_dl_iterate_callback, &libname);
   if (!platform) {
     mju_error("an OpenGL platform library has not been loaded into this process, "

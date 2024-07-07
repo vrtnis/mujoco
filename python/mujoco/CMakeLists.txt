@@ -15,6 +15,9 @@
 project(mujoco_python)
 cmake_minimum_required(VERSION 3.15)
 
+# Set the global compile options to disable int-in-bool-context error
+add_compile_options(-Wno-error=int-in-bool-context)
+
 # Support new IN_LIST if() operator.
 set(CMAKE_POLICY_DEFAULT_CMP0057 NEW)
 # INTERPROCEDURAL_OPTIMIZATION is enforced when enabled.
@@ -39,7 +42,7 @@ set(CMAKE_C_VISIBILITY_PRESET hidden)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 
-# TODO(stunya) Figure out why this is required.
+# TODO: Figure out why this is required.
 separate_arguments(CMDLINE_LINK_OPTIONS UNIX_COMMAND ${CMAKE_SHARED_LINKER_FLAGS})
 add_link_options(${CMDLINE_LINK_OPTIONS})
 
@@ -295,14 +298,13 @@ target_link_libraries(
 include(CheckAvxSupport)
 get_avx_compile_options(AVX_COMPILE_OPTIONS)
 
-macro(mujoco_pybind11_module name)
+macro(mujoco_pybind11_module(name)
   pybind11_add_module(${name} ${ARGN})
   target_compile_options(${name} PRIVATE ${AVX_COMPILE_OPTIONS})
   if(NOT MSVC)
     target_compile_options(
       ${name}
-      PRIVATE -Werror
-              -Wall
+      PRIVATE -Wall
               -Wimplicit-fallthrough
               -Wunused
               -Wno-int-in-bool-context

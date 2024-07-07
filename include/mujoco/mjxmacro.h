@@ -521,8 +521,8 @@
     X   ( mjtNum,  key_qpos,              nkey,          MJ_M(nq)             ) \
     X   ( mjtNum,  key_qvel,              nkey,          MJ_M(nv)             ) \
     X   ( mjtNum,  key_act,               nkey,          MJ_M(na)             ) \
-    X   ( mjtNum,  key_mpos,              nkey,          MJ_M(nmocap)*3       ) \
-    X   ( mjtNum,  key_mquat,             nkey,          MJ_M(nmocap)*4       ) \
+    X   ( mjtNum,  key_mpos,              nkey,          ((size_t)(MJ_M(nmocap) * 3))       ) \
+    X   ( mjtNum,  key_mquat,             nkey,          ((size_t)(MJ_M(nmocap) * 4))       )\
     X   ( mjtNum,  key_ctrl,              nkey,          MJ_M(nu)             ) \
     XMJV( int,     name_bodyadr,          nbody,         1                    ) \
     XMJV( int,     name_jntadr,           njnt,          1                    ) \

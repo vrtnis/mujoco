@@ -237,7 +237,7 @@ mjCModel& mjCModel::operator+=(const mjCModel& other) {
     CopyList(meshes_, other.meshes_, def_map, defaults_);
     CopyList(skins_, other.skins_, def_map, defaults_);
     CopyList(hfields_, other.hfields_, def_map, defaults_);
-    CopyList(textures_, other.textures_, def_map, defaults_);
+   
     CopyList(materials_, other.materials_, def_map, defaults_);
     CopyList(keys_, other.keys_, def_map, defaults_);
   }
@@ -398,7 +398,7 @@ void mjCModel::CreateObjectLists() {
   object_lists_[mjOBJ_MESH]     = (std::vector<mjCBase*>*) &meshes_;
   object_lists_[mjOBJ_SKIN]     = (std::vector<mjCBase*>*) &skins_;
   object_lists_[mjOBJ_HFIELD]   = (std::vector<mjCBase*>*) &hfields_;
-  object_lists_[mjOBJ_TEXTURE]  = (std::vector<mjCBase*>*) &textures_;
+ 
   object_lists_[mjOBJ_MATERIAL] = (std::vector<mjCBase*>*) &materials_;
   object_lists_[mjOBJ_PAIR]     = (std::vector<mjCBase*>*) &pairs_;
   object_lists_[mjOBJ_EXCLUDE]  = (std::vector<mjCBase*>*) &excludes_;
@@ -452,7 +452,7 @@ mjCModel::~mjCModel() {
   for (int i=0; i<meshes_.size(); i++) delete meshes_[i];
   for (int i=0; i<skins_.size(); i++) delete skins_[i];
   for (int i=0; i<hfields_.size(); i++) delete hfields_[i];
-  for (int i=0; i<textures_.size(); i++) delete textures_[i];
+
   for (int i=0; i<materials_.size(); i++) delete materials_[i];
   for (int i=0; i<pairs_.size(); i++) delete pairs_[i];
   for (int i=0; i<excludes_.size(); i++) delete excludes_[i];
@@ -608,11 +608,6 @@ mjCHField* mjCModel::AddHField() {
   return AddObject(hfields_, "hfield");
 }
 
-
-// add texture
-mjCTexture* mjCModel::AddTexture() {
-  return AddObject(textures_, "texture");
-}
 
 
 // add material
@@ -905,15 +900,6 @@ void mjCModel::DeleteMaterial(std::vector<T*>& list, std::string_view name) {
 
 
 
-// delete texture with given name or all textures if the name is omitted
-template <class T>
-static void DeleteTexture(std::vector<T*>& list, std::string_view name = "") {
-  for (T* plist : list) {
-    if (name.empty() || plist->get_texture() == name) {
-      plist->del_texture();
-    }
-  }
-}
 
 
 // delete all texture coordinates
@@ -989,27 +975,9 @@ void mjCModel::Delete<mjCMesh>(std::vector<mjCMesh*>& elements,
 }
 
 
-template <>
-void mjCModel::DeleteAll<mjCMaterial>(std::vector<mjCMaterial*>& elements) {
-  DeleteMaterial(geoms_);
-  DeleteMaterial(skins_);
-  DeleteMaterial(sites_);
-  DeleteMaterial(tendons_);
-  for (mjCMaterial* element : elements) {
-    delete element;
-  }
-  elements.clear();
-}
 
 
-template <>
-void mjCModel::DeleteAll<mjCTexture>(std::vector<mjCTexture*>& elements) {
-  DeleteTexture(materials_);
-  for (mjCTexture* element : elements) {
-    delete element;
-  }
-  elements.clear();
-}
+
 
 // set nuser fields
 void mjCModel::SetNuser() {
@@ -1224,13 +1192,7 @@ void mjCModel::CheckEmptyNames(void) {
     }
   }
 
-  // textures
-  for (int i=0; i < textures_.size(); i++) {
-    if (textures_[i]->name.empty() && textures_[i]->type!=mjTEXTURE_SKYBOX) {
-      throw mjCError(textures_[i], "empty name in texture");
-    }
-  }
-
+ 
   // materials
   for (int i=0; i < materials_.size(); i++) {
     if (materials_[i]->name.empty()) {
@@ -1270,7 +1232,7 @@ void mjCModel::SetSizes() {
   nmesh = (int)meshes_.size();
   nskin = (int)skins_.size();
   nhfield = (int)hfields_.size();
-  ntex = (int)textures_.size();
+
   nmat = (int)materials_.size();
   npair = (int)pairs_.size();
   nexclude = (int)excludes_.size();
@@ -1340,8 +1302,7 @@ void mjCModel::SetSizes() {
   // nhfielddata
   for (int i=0; i<nhfield; i++) nhfielddata += hfields_[i]->nrow * hfields_[i]->ncol;
 
-  // ntexdata
-  for (int i=0; i<ntex; i++) ntexdata += 3 * textures_[i]->width * textures_[i]->height;
+
 
   // nwrap
   for (int i=0; i<ntendon; i++) nwrap += (int)tendons_[i]->path.size();
@@ -1373,7 +1334,7 @@ void mjCModel::SetSizes() {
   for (int i=0; i<nmesh; i++)    nnames += (int)meshes_[i]->name.length() + 1;
   for (int i=0; i<nskin; i++)    nnames += (int)skins_[i]->name.length() + 1;
   for (int i=0; i<nhfield; i++)  nnames += (int)hfields_[i]->name.length() + 1;
-  for (int i=0; i<ntex; i++)     nnames += (int)textures_[i]->name.length() + 1;
+
   for (int i=0; i<nmat; i++)     nnames += (int)materials_[i]->name.length() + 1;
   for (int i=0; i<npair; i++)    nnames += (int)pairs_[i]->name.length() + 1;
   for (int i=0; i<nexclude; i++) nnames += (int)excludes_[i]->name.length() + 1;
@@ -1392,7 +1353,7 @@ void mjCModel::SetSizes() {
   npaths += getpathslength(hfields_);
   npaths += getpathslength(meshes_);
   npaths += getpathslength(skins_);
-  npaths += getpathslength(textures_);
+ 
   if (npaths == 0) {
     npaths = 1;
   }
@@ -1677,8 +1638,7 @@ void mjCModel::CopyNames(mjModel* m) {
   adr = namelist(hfields_, adr, m->name_hfieldadr, m->names, map_adr);
   map_adr += mjLOAD_MULTIPLE*hfields_.size();
 
-  adr = namelist(textures_, adr, m->name_texadr, m->names, map_adr);
-  map_adr += mjLOAD_MULTIPLE*textures_.size();
+
 
   adr = namelist(materials_, adr, m->name_matadr, m->names, map_adr);
   map_adr += mjLOAD_MULTIPLE*materials_.size();
@@ -1742,7 +1702,7 @@ void mjCModel::CopyPaths(mjModel* m) {
   adr = pathlist(hfields_, adr, m->hfield_pathadr, m->paths);
   adr = pathlist(meshes_, adr, m->mesh_pathadr, m->paths);
   adr = pathlist(skins_, adr, m->skin_pathadr, m->paths);
-  adr = pathlist(textures_, adr, m->tex_pathadr, m->paths);
+  
 }
 
 
@@ -2456,24 +2416,7 @@ void mjCModel::CopyObjects(mjModel* m) {
     data_adr += phf->nrow*phf->ncol;
   }
 
-  // textures
-  data_adr = 0;
-  for (int i=0; i<ntex; i++) {
-    // get pointer
-    mjCTexture* ptex = textures_[i];
 
-    // set fields
-    m->tex_type[i] = ptex->type;
-    m->tex_height[i] = ptex->height;
-    m->tex_width[i] = ptex->width;
-    m->tex_adr[i] = data_adr;
-
-    // copy rgb data
-    memcpy(m->tex_rgb + data_adr, ptex->rgb.data(), 3*ptex->width*ptex->height);
-
-    // advance counter
-    data_adr += 3*ptex->width*ptex->height;
-  }
 
   // materials
   for (int i=0; i<nmat; i++) {
@@ -3187,7 +3130,7 @@ void mjCModel::TryCompile(mjModel*& m, mjData*& d, const mjVFS* vfs) {
   SetDefaultNames(meshes_);
   SetDefaultNames(skins_);
   SetDefaultNames(hfields_);
-  SetDefaultNames(textures_);
+
   CheckEmptyNames();
 
   // set object ids, check for repeated names
@@ -3195,10 +3138,10 @@ void mjCModel::TryCompile(mjModel*& m, mjData*& d, const mjVFS* vfs) {
 
   // delete visual assets
   if (discardvisual) {
-    DeleteAll(materials_);
+   
     DeleteTexcoord(flexes_);
     DeleteTexcoord(meshes_);
-    DeleteAll(textures_);
+    
   }
 
   // map names to asset references
@@ -3230,7 +3173,7 @@ void mjCModel::TryCompile(mjModel*& m, mjData*& d, const mjVFS* vfs) {
   for (auto flex : flexes_) flex->Compile(vfs);
   for (auto skin : skins_) skin->Compile(vfs);
   for (auto hfield : hfields_) hfield->Compile(vfs);
-  for (auto texture : textures_) texture->Compile(vfs);
+
   for (auto material : materials_) material->Compile();
   for (auto pair : pairs_) pair->Compile();
   for (auto exclude : excludes_) exclude->Compile();
