@@ -1,0 +1,2 @@
+/home/dev/mujoco/build/emsdk/upstream/emscripten/emar qc ../../lib/libtinyobjloader.a  CMakeFiles/tinyobjloader.dir/tiny_obj_loader.cc.o
+/home/dev/mujoco/build/emsdk/upstream/emscripten/emranlib ../../lib/libtinyobjloader.a

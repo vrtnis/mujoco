@@ -1,0 +1,1 @@
+/home/dev/mujoco/build/emsdk/upstream/emscripten/em++  -O3 -DNDEBUG   @CMakeFiles/mujoco_wasm.dir/objects1.rsp  -o bin/mujoco_wasm.html @CMakeFiles/mujoco_wasm.dir/linklibs.rsp

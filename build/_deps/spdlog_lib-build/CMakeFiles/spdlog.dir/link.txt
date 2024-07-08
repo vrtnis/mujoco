@@ -1,0 +1,2 @@
+/home/dev/mujoco/build/emsdk/upstream/emscripten/emar qc ../../lib/libspdlog.a  CMakeFiles/spdlog.dir/src/spdlog.cpp.o CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.o CMakeFiles/spdlog.dir/src/color_sinks.cpp.o CMakeFiles/spdlog.dir/src/file_sinks.cpp.o CMakeFiles/spdlog.dir/src/async.cpp.o CMakeFiles/spdlog.dir/src/cfg.cpp.o CMakeFiles/spdlog.dir/src/fmt.cpp.o
+/home/dev/mujoco/build/emsdk/upstream/emscripten/emranlib ../../lib/libspdlog.a

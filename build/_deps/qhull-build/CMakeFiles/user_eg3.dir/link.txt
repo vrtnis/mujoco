@@ -1,0 +1,1 @@
+/home/dev/mujoco/build/emsdk/upstream/emscripten/em++  -O3 -DNDEBUG   @CMakeFiles/user_eg3.dir/objects1.rsp  -o ../../bin/user_eg3.js @CMakeFiles/user_eg3.dir/linklibs.rsp

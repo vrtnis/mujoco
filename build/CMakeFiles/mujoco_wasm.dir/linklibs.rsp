@@ -1,0 +1,1 @@
+ lib/libmujoco_wasm.wasm lib/libccd.a lib/libqhullstatic_r.a -lm lib/libtinyobjloader.a lib/libtinyxml2.a 

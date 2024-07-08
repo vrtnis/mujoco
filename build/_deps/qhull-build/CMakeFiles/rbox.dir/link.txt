@@ -1,0 +1,1 @@
+/home/dev/mujoco/build/emsdk/upstream/emscripten/emcc -O3 -DNDEBUG   @CMakeFiles/rbox.dir/objects1.rsp  -o ../../bin/rbox.js @CMakeFiles/rbox.dir/linklibs.rsp

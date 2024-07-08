@@ -1,0 +1,2 @@
+/home/dev/mujoco/build/emsdk/upstream/emscripten/emar qc ../../lib/libtinyxml2.a  CMakeFiles/tinyxml2.dir/tinyxml2.cpp.o
+/home/dev/mujoco/build/emsdk/upstream/emscripten/emranlib ../../lib/libtinyxml2.a

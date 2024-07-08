@@ -1,0 +1,2 @@
+/home/dev/mujoco/build/emsdk/upstream/emscripten/emar qc ../../lib/libelasticity.a  CMakeFiles/elasticity.dir/cable.cc.o CMakeFiles/elasticity.dir/elasticity.cc.o CMakeFiles/elasticity.dir/membrane.cc.o CMakeFiles/elasticity.dir/register.cc.o CMakeFiles/elasticity.dir/shell.cc.o CMakeFiles/elasticity.dir/solid.cc.o
+/home/dev/mujoco/build/emsdk/upstream/emscripten/emranlib ../../lib/libelasticity.a
