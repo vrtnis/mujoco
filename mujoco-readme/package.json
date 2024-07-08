@@ -2,7 +2,7 @@
   "name": "mujoco-readme",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://vrtnis.github.io/",
+  "homepage": "https://github.com/vrtnis/mujoco/blob/gh-pages/",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.9.0",
