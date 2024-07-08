@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "https://raw.githubusercontent.com/vrtnis/mujoco/gh-pages/static/css/main.e6c13ad2.css",
-    "main.js": "https://raw.githubusercontent.com/vrtnis/mujoco/gh-pages/static/js/main.0192525c.js",
-    "static/js/453.3fbd11b1.chunk.js": "https://raw.githubusercontent.com/vrtnis/mujoco/gh-pages/static/js/453.3fbd11b1.chunk.js",
-    "index.html": "https://raw.githubusercontent.com/vrtnis/mujoco/gh-pages/index.html",
-    "main.e6c13ad2.css.map": "https://raw.githubusercontent.com/vrtnis/mujoco/gh-pages/static/css/main.e6c13ad2.css.map",
-    "main.0192525c.js.map": "https://raw.githubusercontent.com/vrtnis/mujoco/gh-pages/static/js/main.0192525c.js.map",
-    "453.3fbd11b1.chunk.js.map": "https://raw.githubusercontent.com/vrtnis/mujoco/gh-pages/static/js/453.3fbd11b1.chunk.js.map"
+    "main.css": "/mujoco/static/css/main.e6c13ad2.css",
+    "main.js": "/mujoco/static/js/main.78f99bbb.js",
+    "static/js/453.3fbd11b1.chunk.js": "/mujoco/static/js/453.3fbd11b1.chunk.js",
+    "index.html": "/mujoco/index.html",
+    "main.e6c13ad2.css.map": "/mujoco/static/css/main.e6c13ad2.css.map",
+    "main.78f99bbb.js.map": "/mujoco/static/js/main.78f99bbb.js.map",
+    "453.3fbd11b1.chunk.js.map": "/mujoco/static/js/453.3fbd11b1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.0192525c.js"
+    "static/js/main.78f99bbb.js"
   ]
 }
