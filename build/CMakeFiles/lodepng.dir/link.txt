@@ -1,2 +1,0 @@
-/home/dev/mujoco/build/emsdk/upstream/emscripten/emar qc lib/liblodepng.a  CMakeFiles/lodepng.dir/_deps/lodepng-src/lodepng.cpp.o
-/home/dev/mujoco/build/emsdk/upstream/emscripten/emranlib lib/liblodepng.a

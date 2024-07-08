@@ -1,2 +1,0 @@
-/home/dev/mujoco/build/emsdk/upstream/emscripten/emar qc ../../lib/libactuator.a  CMakeFiles/actuator.dir/pid.cc.o CMakeFiles/actuator.dir/register.cc.o
-/home/dev/mujoco/build/emsdk/upstream/emscripten/emranlib ../../lib/libactuator.a

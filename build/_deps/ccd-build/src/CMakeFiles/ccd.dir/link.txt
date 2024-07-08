@@ -1,2 +1,0 @@
-/home/dev/mujoco/build/emsdk/upstream/emscripten/emar qc ../../../lib/libccd.a  CMakeFiles/ccd.dir/ccd.c.o CMakeFiles/ccd.dir/mpr.c.o CMakeFiles/ccd.dir/polytope.c.o CMakeFiles/ccd.dir/support.c.o CMakeFiles/ccd.dir/vec3.c.o
-/home/dev/mujoco/build/emsdk/upstream/emscripten/emranlib ../../../lib/libccd.a

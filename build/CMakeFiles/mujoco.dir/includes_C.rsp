@@ -1,1 +1,0 @@
--I/home/dev/mujoco/build/_deps/marchingcubecpp-src -I/home/dev/mujoco/include -I/home/dev/mujoco/src -I/home/dev/mujoco/build/_deps/ccd-src/src -I/home/dev/mujoco/build/_deps/ccd-build/src -I/home/dev/mujoco/build/_deps/qhull-src/src/libqhull_r -I/home/dev/mujoco/build/_deps/tinyobjloader-src -I/home/dev/mujoco/build/_deps/tinyxml2-src 

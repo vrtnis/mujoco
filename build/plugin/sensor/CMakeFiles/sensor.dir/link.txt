@@ -1,2 +1,0 @@
-/home/dev/mujoco/build/emsdk/upstream/emscripten/emar qc ../../lib/libsensor.a  CMakeFiles/sensor.dir/sensor.cc.o CMakeFiles/sensor.dir/touch_grid.cc.o
-/home/dev/mujoco/build/emsdk/upstream/emscripten/emranlib ../../lib/libsensor.a
